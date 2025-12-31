@@ -17,15 +17,22 @@ return {
   },
   {
   "neovim/nvim-lspconfig",
+  dependencies = { 'saghen/blink.cmp' },
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
+      local capabilities = require('blink.cmp').get_lsp_capabilities() 
+
+      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      -- vim.lsp.configs.lua_ls.setup({})
       lspconfig.gopls.setup({})
+      -- vim.lsp.configs.gopls.setup({})
       lspconfig.pyright.setup({})
+      -- vim.lsp.configs.pyright.setup({})
       lspconfig.ts_ls.setup({})
+      -- vim.lsp.configs.ts_ls.setup({})
       vim.diagnostic.config({
         virtual_text = {
           prefix = "■",   -- You can change this to "■", "▶", "◆", etc.

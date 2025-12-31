@@ -21,6 +21,22 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- -- Add lazy.nvim plugins to package.path
+-- local lazy_root = vim.fn.stdpath("data") .. "/lazy"
+-- local handle = vim.loop.fs_scandir(lazy_root)
+-- if handle then
+--   while true do
+--     local name, typ = vim.loop.fs_scandir_next(handle)
+--     if not name then break end
+--     if typ == "directory" then
+--       local lua_path = string.format("%s/%s/lua/?.lua;%s/%s/lua/?/init.lua;", lazy_root, name, lazy_root, name)
+--       package.path = lua_path .. package.path
+--       local lua_cpath = string.format("%s/%s/lua/?.so;", lazy_root, name)
+--       package.cpath = lua_cpath .. package.cpath
+--     end
+--   end
+-- end
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
@@ -32,4 +48,4 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
-}) 
+})
