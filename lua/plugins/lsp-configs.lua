@@ -8,7 +8,7 @@ return {
   {
      "williamboman/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = {"lua_ls","gopls","ts_ls","pyright"},
+      ensure_installed = {"lua_ls","gopls","ts_ls","pyright","rust_analyzer"},
     },
     dependencies = {
         { "williamboman/mason.nvim", opts = {} },
@@ -22,17 +22,24 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = require('blink.cmp').get_lsp_capabilities() 
+      -- local lspconfig = require("lspconfig")
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
-      -- vim.lsp.configs.lua_ls.setup({})
-      lspconfig.gopls.setup({})
-      -- vim.lsp.configs.gopls.setup({})
-      lspconfig.pyright.setup({})
-      -- vim.lsp.configs.pyright.setup({})
-      lspconfig.ts_ls.setup({})
-      -- vim.lsp.configs.ts_ls.setup({})
+      -- lspconfig.lua_ls.setup({ capabilities = capabilities })
+      vim.lsp.config("lua_ls", { capabilities = capabilities })
+      -- lspconfig.gopls.setup({})
+      vim.lsp.config("gopls", { capabilities = capabilities })
+      -- lspconfig.pyright.setup({})
+      vim.lsp.config("pyright", { capabilities = capabilities })
+      -- lspconfig.ts_ls.setup({})
+      vim.lsp.config("ts_ls", { capabilities = capabilities })
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+        settings = {
+          ['rust-analyzer'] = {},
+        },
+      })
+
       vim.diagnostic.config({
         virtual_text = {
           prefix = "■",   -- You can change this to "■", "▶", "◆", etc.

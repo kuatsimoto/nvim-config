@@ -33,9 +33,7 @@ vim.g.maplocalleader = "\\"
 --       package.path = lua_path .. package.path
 --       local lua_cpath = string.format("%s/%s/lua/?.so;", lazy_root, name)
 --       package.cpath = lua_cpath .. package.cpath
---     end
---   end
--- end
+--     end end end
 
 -- Setup lazy.nvim
 require("lazy").setup({
