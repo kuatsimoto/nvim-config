@@ -5,3 +5,4 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.cmd("set number")
 vim.g.diagnostics_active = true
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], {noremap = true, silent = true})
