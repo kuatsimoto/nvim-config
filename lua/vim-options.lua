@@ -6,3 +6,8 @@ vim.g.mapleader = " "
 vim.cmd("set number")
 vim.g.diagnostics_active = true
 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], {noremap = true, silent = true})
+vim.keymap.set('n', '<leader>th', function()
+  vim.cmd("split | terminal")
+  vim.cmd("wincmd J")
+end, { desc = "Open terminal at at the bottem as split"}
+)
