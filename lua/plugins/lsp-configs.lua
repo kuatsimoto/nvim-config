@@ -6,18 +6,18 @@ return {
     end
   },
   {
-     "williamboman/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = {"lua_ls","gopls","ts_ls","pyright","rust_analyzer"},
+      ensure_installed = { "lua_ls", "gopls", "ts_ls", "pyright", "rust_analyzer" },
     },
     dependencies = {
-        { "williamboman/mason.nvim", opts = {} },
-        "neovim/nvim-lspconfig",
+      { "williamboman/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
     },
   },
   {
-  "neovim/nvim-lspconfig",
-  dependencies = { 'saghen/blink.cmp' },
+    "neovim/nvim-lspconfig",
+    dependencies = { 'saghen/blink.cmp' },
   },
   {
     "neovim/nvim-lspconfig",
@@ -42,7 +42,7 @@ return {
 
       vim.diagnostic.config({
         virtual_text = {
-          prefix = "■",   -- You can change this to "■", "▶", "◆", etc.
+          prefix = "■", -- You can change this to "■", "▶", "◆", etc.
           spacing = 2,
           source = "if_many", -- show source if multiple LSPs
         },
@@ -53,7 +53,7 @@ return {
       })
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-      vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
+      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
     end
   }
 }
