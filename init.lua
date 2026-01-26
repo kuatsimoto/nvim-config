@@ -19,3 +19,5 @@ vim.g.clipboard = {
   cache_enabled = 0,
 }
 vim.opt.clipboard = 'unnamedplus'   -- Optional: Use system clipboard by default
+vim.opt.ambiwidth = "single"
+vim.opt.termguicolors = true
