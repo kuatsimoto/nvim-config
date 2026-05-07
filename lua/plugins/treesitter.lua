@@ -1,14 +1,15 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.config").setup({
-      -- local config = require("nvim-treesitter.configs")
-      -- config.setup({
+      local config = require("nvim-treesitter.configs")
+      config.setup({
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
+        file_ignore_patterns = { "node_modules", ".git" },
       })
     end
   }

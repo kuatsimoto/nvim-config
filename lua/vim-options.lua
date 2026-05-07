@@ -5,7 +5,7 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.cmd("set number")
 vim.g.diagnostics_active = true
-vim.opt.scrolloff = 20
+vim.opt.scrolloff = 10
 
 -- Keymaps
 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], {noremap = true, silent = true})
@@ -30,3 +30,9 @@ vim.keymap.set("n", "<leader>h5", function() harpoon:list():select(5) end)
 
 vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
 vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
+
+vim.keymap.set('n', '<leader>er', vim.diagnostic.open_float, { desc = '[E]xpand diagnostic message' })
+
+vim.keymap.set('n', '<leader>mt', "<CMD>Markview<CR>", { desc = 'Toggle markdown view in buffer'})
+vim.keymap.set('n', '<leader>mp', "<CMD>MarkdownPreview<CR>", { desc = 'Start browser markdown preview'})
+vim.keymap.set('n', '<leader>ms', "<CMD>MarkdownPreviewStop<CR>", { desc = 'Stop browser markdown preview'})

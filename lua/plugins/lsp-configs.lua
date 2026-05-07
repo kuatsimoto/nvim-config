@@ -8,7 +8,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = { "lua_ls", "gopls", "ts_ls", "pyright", "rust_analyzer" },
+      ensure_installed = { "lua_ls", "gopls", "vtsls", "pyright", "rust_analyzer" },
     },
     dependencies = {
       { "williamboman/mason.nvim", opts = {} },
@@ -31,8 +31,14 @@ return {
       vim.lsp.config("gopls", { capabilities = capabilities })
       -- lspconfig.pyright.setup({})
       vim.lsp.config("pyright", { capabilities = capabilities })
-      -- lspconfig.ts_ls.setup({})
-      vim.lsp.config("ts_ls", { capabilities = capabilities })
+      -- vtsls - configured for Yarn PnP compatibility
+      vim.lsp.config("vtsls", {
+        capabilities = capabilities,
+        cmd = { "yarn", "dlx", "@vtsls/language-server", "--stdio" },
+        root_dir = function(fname)
+          return vim.fs.root(fname, { ".git", "package.json", ".yarnrc.yml" })
+        end,
+      })
       vim.lsp.config("rust_analyzer", {
         capabilities = capabilities,
         settings = {
