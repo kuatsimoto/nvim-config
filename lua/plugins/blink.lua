@@ -14,10 +14,17 @@ return {
       nerd_font_variant = 'mono'
     },
 
-    completion = { documentation = { auto_show = false } },
+    completion = {
+      documentation = { auto_show = false },
+      -- Reduce typing lag by delaying completion popup
+      trigger = {
+        show_on_insert_on_trigger_character = false,
+      },
+    },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      -- Remove 'buffer' source which scans all files in large projects
+      default = { 'lsp', 'path', 'snippets' },
     },
 
     fuzzy = { implementation = "prefer_rust_with_warning" }

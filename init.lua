@@ -2,22 +2,26 @@
 package.loaded["tree-sitter"] = nil
 package.loaded["tree-sitter.parsers"] = nil
 
+-- Enable project-local configuration files (.nvim.lua, .exrc, etc.)
+vim.o.exrc = true
+
 require("config.lazy")
 require("vim-options")
 
 
+-- WSL Clipboard integration using win32yank for better performance
 vim.g.clipboard = {
-  name = 'WslClipboard',
+  name = 'Win32yank',
   copy = {
-    ['+'] = 'clip.exe',
-    ['*'] = 'clip.exe',
+    ['+'] = 'win32yank.exe -i --crlf',
+    ['*'] = 'win32yank.exe -i --crlf',
   },
   paste = {
-    ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("\r", ""))',
-    ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("\r", ""))',
+    ['+'] = 'win32yank.exe -o --lf',
+    ['*'] = 'win32yank.exe -o --lf',
   },
   cache_enabled = 0,
 }
-vim.opt.clipboard = 'unnamedplus'   -- Optional: Use system clipboard by default
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.ambiwidth = "single"
 vim.opt.termguicolors = true

@@ -22,27 +22,77 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      -- local lspconfig = require("lspconfig")
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      -- lspconfig.lua_ls.setup({ capabilities = capabilities })
-      vim.lsp.config("lua_ls", { capabilities = capabilities })
-      -- lspconfig.gopls.setup({})
-      vim.lsp.config("gopls", { capabilities = capabilities })
-      -- lspconfig.pyright.setup({})
-      vim.lsp.config("pyright", { capabilities = capabilities })
-      -- vtsls - configured for Yarn PnP compatibility
-      vim.lsp.config("vtsls", {
+      -- Set shared capabilities for ALL LSP servers via wildcard config
+      -- Individual servers inherit these unless they explicitly override
+      vim.lsp.config('*', {
         capabilities = capabilities,
-        cmd = { "yarn", "dlx", "@vtsls/language-server", "--stdio" },
+      })
+
+      -- Configure standard servers with new API (capabilities inherited from '*')
+      vim.lsp.config('lua_ls', {})
+      vim.lsp.config('gopls', {})
+      vim.lsp.config('pyright', {})
+      vim.lsp.config('rust_analyzer', {
+        settings = {
+          ['rust-analyzer'] = {},
+        },
+      })
+
+      -- Enable standard servers
+      vim.lsp.enable({ 'lua_ls', 'gopls', 'pyright', 'rust_analyzer' })
+
+      -- vtsls - Uses lspconfig.setup() instead of vim.lsp.config() because:
+      -- 1. Custom yarn command requires proper PnP-aware invocation
+      -- 2. vim.lsp.config() + vim.lsp.enable() doesn't attach with custom commands
+      -- 3. This approach works reliably and produces only one deprecation warning
+      -- Using 'yarn run --binaries-only' instead of 'yarn dlx' for 3x faster startup
+      local lspconfig = require("lspconfig")
+      lspconfig.vtsls.setup({
+        capabilities = capabilities,
+        cmd = { "yarn", "run", "--binaries-only", "vtsls", "--stdio" },
         root_dir = function(fname)
           return vim.fs.root(fname, { ".git", "package.json", ".yarnrc.yml" })
         end,
-      })
-      vim.lsp.config("rust_analyzer", {
-        capabilities = capabilities,
         settings = {
-          ['rust-analyzer'] = {},
+          typescript = {
+            -- Reduce typing lag by limiting diagnostics during typing
+            updateImportsOnFileMove = { enabled = "never" },
+            suggest = {
+              completeFunctionCalls = false,
+            },
+            inlayHints = {
+              parameterNames = { enabled = "none" },
+              parameterTypes = { enabled = false },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = false },
+              functionLikeReturnTypes = { enabled = false },
+              enumMemberValues = { enabled = false },
+            },
+          },
+          javascript = {
+            updateImportsOnFileMove = { enabled = "never" },
+            suggest = {
+              completeFunctionCalls = false,
+            },
+            inlayHints = {
+              parameterNames = { enabled = "none" },
+              parameterTypes = { enabled = false },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = false },
+              functionLikeReturnTypes = { enabled = false },
+              enumMemberValues = { enabled = false },
+            },
+          },
+          vtsls = {
+            -- Performance: Use faster semantic checking
+            experimental = {
+              completion = {
+                enableServerSideFuzzyMatch = false,
+              },
+            },
+          },
         },
       })
 
